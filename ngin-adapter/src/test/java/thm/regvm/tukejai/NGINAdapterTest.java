@@ -21,7 +21,7 @@ public class NGINAdapterTest extends TestCase {
 
 	public void testValidExistFile() {
 		Adapter adapter = NGINAdapter.getInstance();
-		String fakepath = "F:\\Regvm Project\\game.tukejai.com\\contentDL\\NGIN\\NGIN\\www.ngin.co.th\\s";
+		String fakepath = "F:/Regvm Project/game.tukejai.com/contentDL/NGIN/NGIN/www.ngin.co.th/s";
 		assertEquals(false, adapter.valiadateExistFile(fakepath));
 		String truepath = "F:/Regvm Project/game.tukejai.com/contentDL/NGIN/NGIN/www.ngin.co.th/";
 		assertEquals(true, adapter.valiadateExistFile(truepath));
