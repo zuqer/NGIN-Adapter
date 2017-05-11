@@ -8,7 +8,7 @@ public interface Adapter {
 
 	boolean valiadateExistFile(String path);
 
-	List<XAdapterDataImportInfo> listItemInfile() throws AdapterException;
+	List<XAdapterDataImportInfo> listItemInfile(String path) throws AdapterException;
 
 	void createCSVFile(String string, String[] fieldArray);
 

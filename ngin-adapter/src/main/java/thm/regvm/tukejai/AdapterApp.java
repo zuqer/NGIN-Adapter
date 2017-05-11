@@ -14,7 +14,7 @@ public class AdapterApp {
 		Adapter adapter = NGINAdapter.getInstance();
 		if (adapter.valiadateExistFile("")) {
 			try {
-				List<XAdapterDataImportInfo> itemlist = adapter.listItemInfile();
+				List<XAdapterDataImportInfo> itemlist = adapter.listItemInfile("");
 				adapter.createCSVFile("", XAapterDataField.fieldArray);
 			} catch (AdapterException e) {
 				e.printStackTrace();

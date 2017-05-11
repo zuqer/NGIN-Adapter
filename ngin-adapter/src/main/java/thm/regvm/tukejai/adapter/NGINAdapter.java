@@ -8,25 +8,27 @@ import thm.regvm.tukejai.info.XAdapterDataImportInfo;
 public class NGINAdapter implements Adapter {
 	
 	private static Adapter instance ;
-	private static String folderPath ;
 	
-	public static Adapter getInstance(){
+	public synchronized  static Adapter getInstance(){
 		if(instance == null){
-			instance = new NGINAdapter();
+			synchronized (NGINAdapter.class) {
+				if(instance ==null){
+					instance = new NGINAdapter();
+				}
+			}
+			
 		}
 		return instance;
 	}
 
 	public boolean valiadateExistFile(String path) {
 		File file = new File(path);
-		if(file.exists()){
-			folderPath = path;
-		}
 		return file.exists();
 	}
 
-	public List<XAdapterDataImportInfo> listItemInfile() throws AdapterException {
-		if(folderPath ==null){
+	public List<XAdapterDataImportInfo> listItemInfile(String folderpath) throws AdapterException {
+		System.out.println("folder path "+folderpath);
+		if(!valiadateExistFile(folderpath)){
 			throw new AdapterException("Invalid path");
 		}
 		return null;
