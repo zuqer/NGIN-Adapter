@@ -1,5 +1,7 @@
 package thm.regvm.tukejai.info;
 
+import org.jsoup.helper.StringUtil;
+
 public class XAdapterDataImportInfo {
 
 	private String postTitile;
@@ -388,6 +390,18 @@ public class XAdapterDataImportInfo {
 
 	public void setTaxProduct_shippingClass(String taxProduct_shippingClass) {
 		this.taxProduct_shippingClass = taxProduct_shippingClass;
+	}
+
+	@Override
+	public String toString() {
+		return "XAdapterDataImportInfo [postTitile=" + postTitile + ", postName=" + postName + ", ID=" + ID + ", postExcerpt=" + postExcerpt + ", postContent=" + postContent + ", postStatus="
+				+ postStatus + ", menuOrder=" + menuOrder + ", postDate=" + postDate + ", postAuthor=" + postAuthor + ", commentStatus=" + commentStatus + ", sku=" + sku + ", downloadable="
+				+ downloadable + ", virtual=" + virtual + ", stock=" + stock + ", regularPrice=" + regularPrice + ", salePrice=" + salePrice + ", weight=" + weight + ", length=" + length + ", width="
+				+ width + ", height=" + height + ", taxClass=" + taxClass + ", visibility=" + visibility + ", stockStatus=" + stockStatus + ", backorders=" + backorders + ", manageStock="
+				+ manageStock + ", taxStatus=" + taxStatus + ", upsellIds=" + upsellIds + ", crosssellIds=" + crosssellIds + ", featured=" + featured + ", salePriceDatesFrom=" + salePriceDatesFrom
+				+ ", salePriceDatesTo=" + salePriceDatesTo + ", downloadLimit=" + downloadLimit + ", downloadExpiry=" + downloadExpiry + ", productUrl=" + productUrl + ", buttonText=" + buttonText
+				+ ", images=" + images + ", downloadableFiles=" + downloadableFiles + ", taxManufacturer=" + taxManufacturer + ", taxProductType=" + taxProductType + ", taxProductVisibility="
+				+ taxProductVisibility + ", taxProductCat=" + taxProductCat + ", taxProductTag=" + taxProductTag + ", taxProduct_shippingClass=" + taxProduct_shippingClass + "]";
 	}
 
 }

@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import thm.regvm.tukejai.adapter.Adapter;
 import thm.regvm.tukejai.adapter.AdapterException;
 import thm.regvm.tukejai.adapter.NGINAdapter;
+import thm.regvm.tukejai.info.XAapterDataField;
 
 /**
  * Unit test for simple App.
@@ -49,6 +50,16 @@ public class NGINAdapterTest extends TestCase {
 			assertFalse(true);
 		}
 
+	}
+	
+	public void testGenerateOutput(){
+		String outputPath = "F:/Regvm Project/game.tukejai.com/woocommerce-product-export.csv" ;
+		Adapter adapter = NGINAdapter.getInstance();
+		try {
+			adapter.createCSVFile(outputPath, XAapterDataField.fieldArray);
+		} catch (AdapterException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
