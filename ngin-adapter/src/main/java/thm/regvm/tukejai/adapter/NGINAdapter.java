@@ -1,28 +1,28 @@
 package thm.regvm.tukejai.adapter;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.NodeList;
+
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.BeanToCsv;
+import com.opencsv.bean.ColumnPositionMappingStrategy;
 
 import thm.regvm.tukejai.info.XAapterDataField;
 import thm.regvm.tukejai.info.XAdapterDataImportInfo;
+import us.codecraft.xsoup.XElements;
 import us.codecraft.xsoup.Xsoup;
 
 public class NGINAdapter implements Adapter {
@@ -46,23 +46,54 @@ public class NGINAdapter implements Adapter {
 		return file.exists();
 	}
 
-	public List<XAdapterDataImportInfo> listItemInfile(String folderpath) throws AdapterException {
-		System.out.println("folder path " + folderpath);
-		if (!valiadateExistFile(folderpath)) {
+	public List<XAdapterDataImportInfo> listItemInfile(String path) throws AdapterException {
+		List<XAdapterDataImportInfo> listData = new ArrayList<>();
+		if (!valiadateExistFile(path)) {
 			throw new AdapterException("Invalid path");
 		}
-		return null;
-	}
-
-	public void createCSVFile(String htmlOriginPath, String[] fieldArray) throws AdapterException {
-		System.out.println("Read file at " + htmlOriginPath);
-		if (!valiadateExistFile(htmlOriginPath)) {
-			throw new AdapterException("Invalid htmlOriginPath");
+		File folderPath = new File(path);
+		for (final File fileEntry : folderPath.listFiles()) {
+			XAdapterDataImportInfo info = phaseModel(fileEntry.getAbsolutePath());
+			listData.add(info);
 		}
 
+		return listData;
 	}
 
+	public void createCSVFile(String sourcePath, String outputPath, String[] fieldArray, List<XAdapterDataImportInfo> listInfo) throws AdapterException, IOException {
+		List<XAdapterDataImportInfo> dataInfoList = new ArrayList<>();
+
+		if (!valiadateExistFile(sourcePath)) {
+			throw new AdapterException("Invalid path");
+		}
+		if (CollectionUtils.isEmpty(listInfo)) {
+			List<XAdapterDataImportInfo> listProduct = listItemInfile(sourcePath);
+			dataInfoList.addAll(listProduct);
+		} else {
+			dataInfoList.addAll(listInfo);
+		}
+		final CSVWriter csvWriter = new CSVWriter(new FileWriter(outputPath));
+		try {
+			csvWriter.writeNext(XAapterDataField.fieldArray);
+
+			dataInfoList.forEach(dImport -> {
+				csvWriter.writeNext(dImport.toDefailtCSVString().split(","));
+			});
+
+		} finally {
+			if (csvWriter != null) {
+				try {
+					csvWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+
 	public XAdapterDataImportInfo phaseModel(String filePath) {
+		System.out.println("Path"+filePath);
 		XAdapterDataImportInfo info = new XAdapterDataImportInfo();
 
 		File input = new File(filePath);
@@ -127,20 +158,29 @@ public class NGINAdapter implements Adapter {
 	}
 
 	private String getImageFormat(Document doc) {
-		// TODO Auto-generated method stub
-		return null;
+		String contantValue = "http://game.tukejai.com/wp-content/uploads/2017/05";
+		XElements imageName = Xsoup.compile(XAapterDataField.XPATH_IMG_THUM).evaluate(doc);
+
+		String imageNameString = StringUtils.remove(imageName.getElements().attr("src"), "data/product/");
+
+		StringBuffer imgURL = new StringBuffer();
+		imgURL.append(contantValue);
+		imgURL.append(imageNameString);
+
+		return imgURL.toString();
 	}
 
 	private StringBuilder getDetailTemplate(Document doc) throws XPathExpressionException {
 		final StringBuilder detailInfo = new StringBuilder();
-		XPathFactory xPathfactory = XPathFactory.newInstance();
-		XPath xpath = xPathfactory.newXPath();
-		List<String> valuelist = Xsoup.compile(XAapterDataField.XPATH_POST_CONTENT_LIST).evaluate(doc).list();
-		valuelist.forEach( e->{
-			detailInfo.append(e);
-		});
+//		XPathFactory xPathfactory = XPathFactory.newInstance();
+//		XPath xpath = xPathfactory.newXPath();
+//		List<String> valuelist = Xsoup.compile(XAapterDataField.XPATH_POST_CONTENT_LIST).evaluate(doc).list();
+//		valuelist.forEach( e->{
+//			detailInfo.append(StringUtils.replace(e, ",", StringUtils.EMPTY));
+//		});
 		
 		return detailInfo;
 	}
+
 
 }

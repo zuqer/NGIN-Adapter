@@ -1,52 +1,53 @@
 package thm.regvm.tukejai.info;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.helper.StringUtil;
 
 public class XAdapterDataImportInfo {
 
-	private String postTitile;
-	private String postName;
-	private String ID;
-	private String postExcerpt;
-	private String postContent;
-	private String postStatus;
-	private String menuOrder;
-	private String postDate;
-	private String postAuthor;
-	private String commentStatus;
-	private String sku;
-	private String downloadable;
-	private String virtual;
-	private String stock;
-	private String regularPrice;
-	private String salePrice;
-	private String weight;
-	private String length;
-	private String width;
-	private String height;
-	private String taxClass;
-	private String visibility;
-	private String stockStatus;
-	private String backorders;
-	private String manageStock;
-	private String taxStatus;
-	private String upsellIds;
-	private String crosssellIds;
-	private String featured;
-	private String salePriceDatesFrom;
-	private String salePriceDatesTo;
-	private String downloadLimit;
-	private String downloadExpiry;
-	private String productUrl;
-	private String buttonText;
-	private String images;
-	private String downloadableFiles;
-	private String taxManufacturer;
-	private String taxProductType;
-	private String taxProductVisibility;
-	private String taxProductCat;
-	private String taxProductTag;
-	private String taxProduct_shippingClass;
+	private String postTitile = StringUtils.EMPTY;
+	private String postName = StringUtils.EMPTY;
+	private String ID = StringUtils.EMPTY;
+	private String postExcerpt = StringUtils.EMPTY;
+	private String postContent = StringUtils.EMPTY;
+	private String postStatus = StringUtils.EMPTY;
+	private String menuOrder = StringUtils.EMPTY;
+	private String postDate = StringUtils.EMPTY;
+	private String postAuthor = StringUtils.EMPTY;
+	private String commentStatus = StringUtils.EMPTY;
+	private String sku = StringUtils.EMPTY;
+	private String downloadable = StringUtils.EMPTY;
+	private String virtual = StringUtils.EMPTY;
+	private String stock = StringUtils.EMPTY;
+	private String regularPrice = StringUtils.EMPTY;
+	private String salePrice = StringUtils.EMPTY;
+	private String weight = StringUtils.EMPTY;
+	private String length = StringUtils.EMPTY;
+	private String width = StringUtils.EMPTY;
+	private String height = StringUtils.EMPTY;
+	private String taxClass = StringUtils.EMPTY;
+	private String visibility = StringUtils.EMPTY;
+	private String stockStatus = StringUtils.EMPTY;
+	private String backorders = StringUtils.EMPTY;
+	private String manageStock = StringUtils.EMPTY;
+	private String taxStatus = StringUtils.EMPTY;
+	private String upsellIds = StringUtils.EMPTY;
+	private String crosssellIds = StringUtils.EMPTY;
+	private String featured = StringUtils.EMPTY;
+	private String salePriceDatesFrom = StringUtils.EMPTY;
+	private String salePriceDatesTo = StringUtils.EMPTY;
+	private String downloadLimit = StringUtils.EMPTY;
+	private String downloadExpiry = StringUtils.EMPTY;
+	private String productUrl = StringUtils.EMPTY;
+	private String buttonText = StringUtils.EMPTY;
+	private String images = StringUtils.EMPTY;
+	private String downloadableFiles = StringUtils.EMPTY;
+	private String taxManufacturer = StringUtils.EMPTY;
+	private String taxProductType = StringUtils.EMPTY;
+	private String taxProductVisibility = StringUtils.EMPTY;
+	private String taxProductCat = StringUtils.EMPTY;
+	private String taxProductTag = StringUtils.EMPTY;
+	private String taxProduct_shippingClass = StringUtils.EMPTY;
 
 	public String getPostTitile() {
 		return postTitile;
@@ -402,6 +403,16 @@ public class XAdapterDataImportInfo {
 				+ ", salePriceDatesTo=" + salePriceDatesTo + ", downloadLimit=" + downloadLimit + ", downloadExpiry=" + downloadExpiry + ", productUrl=" + productUrl + ", buttonText=" + buttonText
 				+ ", images=" + images + ", downloadableFiles=" + downloadableFiles + ", taxManufacturer=" + taxManufacturer + ", taxProductType=" + taxProductType + ", taxProductVisibility="
 				+ taxProductVisibility + ", taxProductCat=" + taxProductCat + ", taxProductTag=" + taxProductTag + ", taxProduct_shippingClass=" + taxProduct_shippingClass + "]";
+	}
+
+	public String toDefailtCSVString() {
+		String CVSFormat = postTitile + "," + postName + "," + ID + "," + postExcerpt + "," + postContent + "," + postStatus + "," + menuOrder + "," + postDate + "," + postAuthor + "," + commentStatus
+				+ "," + sku + "," + downloadable + "," + virtual + "," + stock + "," + regularPrice + "," + salePrice + "," + weight + "," + length + "," + width + "," + height + "," + taxClass + ","
+				+ visibility + "," + stockStatus + "," + backorders + "," + manageStock + "," + taxStatus + "," + upsellIds + "," + crosssellIds + "," + featured + "," + salePriceDatesFrom + ","
+				+ salePriceDatesTo + "," + downloadLimit + "," + downloadExpiry + "," + productUrl + "," + buttonText + "," + images + "," + downloadableFiles + "," + taxManufacturer + ","
+				+ taxProductType + "," + taxProductVisibility + "," + taxProductCat + "," + taxProductTag + "," + taxProduct_shippingClass;
+		return CVSFormat;
+
 	}
 
 }

@@ -1,5 +1,7 @@
 package thm.regvm.tukejai;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 import thm.regvm.tukejai.adapter.Adapter;
 import thm.regvm.tukejai.adapter.AdapterException;
@@ -53,11 +55,13 @@ public class NGINAdapterTest extends TestCase {
 	}
 	
 	public void testGenerateOutput(){
-		String outputPath = "F:/Regvm Project/game.tukejai.com/woocommerce-product-export.csv" ;
 		Adapter adapter = NGINAdapter.getInstance();
 		try {
-			adapter.createCSVFile(outputPath, XAapterDataField.fieldArray);
+			adapter.createCSVFile("F:/Regvm Project/game.tukejai.com/File","F:/Regvm Project/game.tukejai.com/Import file/beta_generate_woocommerce-product-export.csv", XAapterDataField.fieldArray,null);
 		} catch (AdapterException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

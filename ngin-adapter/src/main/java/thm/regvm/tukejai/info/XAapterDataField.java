@@ -5,7 +5,8 @@ public class XAapterDataField {
 	public static String XPATH_POST_TITLE = "/html/body/div[3]/div/div[1]/text()";
 	@Deprecated
 	public static String XPATH_POST_EXCERPT = "";
-	public static String XPATH_POST_CONTENT_LIST = "/html/body/div[3]/div/ul/li[2]/div/p/text()";
+	//public static String XPATH_POST_CONTENT_LIST = "/html/body/div[3]/div/ul/li[2]/div/p/text()";
+	public static String XPATH_POST_CONTENT_LIST = "/html/body/div[3]/div/ul/li[2]/div/div/text()";
 	public static String XPATH_YOU_TUBE = "/html/body/div[3]/div/ul/li[2]/div/iframe";
 	public static String XPATH_IMG_THUM = "/html/body/div[3]/div/ul/li[1]/div/img";
 	public static String XPATH_PLATFORM = "/html/body/div[3]/div/ul/li[1]/div/p[1]/span[2]/text()";
