@@ -9,11 +9,11 @@ public class NGINPraseHtmlTest extends TestCase {
 
 	public void testPraseHtml() {
 		Adapter adapter = NGINAdapter.getInstance();
-		String requestPath = "F:/Regvm Project/game.tukejai.com/contentDL/NGIN/NGIN/www.ngin.co.th/product-detail0c98.html" ;
+		String requestPath = "F:/Regvm Project/game.tukejai.com/selectFile/product-detailbb33.html" ;
 		//String requestPath = "F:/Regvm Project/game.tukejai.com/contentDL/NGIN/NGIN/www.ngin.co.th/product-detail0d7d.html" ;
 		XAdapterDataImportInfo info = adapter.phaseModel(requestPath);
 		assertNotNull(info);
-		System.out.println("request info "+info.toString());
+		System.out.println("request info "+info.getPostContent());
 		
 		
 	}

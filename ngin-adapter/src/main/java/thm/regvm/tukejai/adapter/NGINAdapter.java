@@ -54,7 +54,9 @@ public class NGINAdapter implements Adapter {
 		File folderPath = new File(path);
 		for (final File fileEntry : folderPath.listFiles()) {
 			XAdapterDataImportInfo info = phaseModel(fileEntry.getAbsolutePath());
-			listData.add(info);
+			if(!StringUtils.isEmpty(info.getPostTitile())){
+				listData.add(info);
+			}
 		}
 
 		return listData;
@@ -93,7 +95,6 @@ public class NGINAdapter implements Adapter {
 
 
 	public XAdapterDataImportInfo phaseModel(String filePath) {
-		System.out.println("Path"+filePath);
 		XAdapterDataImportInfo info = new XAdapterDataImportInfo();
 
 		File input = new File(filePath);
@@ -104,8 +105,7 @@ public class NGINAdapter implements Adapter {
 			XPath xPath = XPathFactory.newInstance().newXPath();
 
 			String gameName = Xsoup.compile(XAapterDataField.XPATH_POST_TITLE).evaluate(doc).get();
-			info.setPostTitile(gameName);
-			info.setPostName(CharecterUtil.replaceSpaceWithDash(gameName));
+			
 			StringBuilder gameFullDetail = getDetailTemplate(doc);
 			info.setPostContent(gameFullDetail.toString());
 			info.setPostStatus("publish");
@@ -147,6 +147,11 @@ public class NGINAdapter implements Adapter {
 			info.setTaxProductCat(category);
 			info.setTaxProductTag(StringUtils.EMPTY);
 			info.setTaxProduct_shippingClass(StringUtils.EMPTY);	
+			
+			//
+			info.setPostTitile(StringUtils.replace(category+" "+gameName, ",", StringUtils.EMPTY) );
+			info.setPostName(CharecterUtil.replaceSpaceWithDash(info.getPostTitile()));
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -158,7 +163,7 @@ public class NGINAdapter implements Adapter {
 	}
 
 	private String getImageFormat(Document doc) {
-		String contantValue = "http://game.tukejai.com/wp-content/uploads/2017/05";
+		String contantValue = "http://game.tukejai.com/wp-content/uploads/2017/05/";
 		XElements imageName = Xsoup.compile(XAapterDataField.XPATH_IMG_THUM).evaluate(doc);
 
 		String imageNameString = StringUtils.remove(imageName.getElements().attr("src"), "data/product/");
@@ -172,12 +177,23 @@ public class NGINAdapter implements Adapter {
 
 	private StringBuilder getDetailTemplate(Document doc) throws XPathExpressionException {
 		final StringBuilder detailInfo = new StringBuilder();
-//		XPathFactory xPathfactory = XPathFactory.newInstance();
-//		XPath xpath = xPathfactory.newXPath();
-//		List<String> valuelist = Xsoup.compile(XAapterDataField.XPATH_POST_CONTENT_LIST).evaluate(doc).list();
-//		valuelist.forEach( e->{
-//			detailInfo.append(StringUtils.replace(e, ",", StringUtils.EMPTY));
-//		});
+		XPathFactory xPathfactory = XPathFactory.newInstance();
+		XPath xpath = xPathfactory.newXPath();
+		//String value = "/html/body/div[3]/div/ul/li[2]/div/div[2]/text()[2]";
+		String value ="/html/body/div[3]/div/ul/li[2]/div";
+		List<String> valuelist = Xsoup.compile(value).evaluate(doc).list();
+		//List<String> valuelist = Xsoup.compile(XAapterDataField.XPATH_POST_CONTENT_LIST).evaluate(doc).list();
+		valuelist.forEach( e->{
+			// Related Game
+			String rawContent = Jsoup.parse(e).text();
+			if(rawContent.indexOf("Related Game") != -1){
+				String requestString = rawContent.substring(0, rawContent.indexOf("Related Game"));
+				//detailInfo.append(requestString, ",", StringUtils.EMPTY)));
+				detailInfo.append(StringUtils.replace(requestString, ",", StringUtils.EMPTY));
+			}
+			
+			
+		});
 		
 		return detailInfo;
 	}
